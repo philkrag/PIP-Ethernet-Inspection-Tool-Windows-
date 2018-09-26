@@ -19,9 +19,14 @@ namespace PIP_Ethernet_Inspection_Tool
 
         ////////////////////////////////////////////////////////////////// FORM
 
+        private void FRM_Receive_Load(object sender, EventArgs e)
+        {
+            //this.Height = 790;
+        }
+
         private void FRM_Receive_FormClosing(object sender, FormClosingEventArgs e)
         {
-            BW_Monitoring_Engine.Dispose();
+            BW_TCP_Monitoring_Engine.Dispose();
         }
 
         ////////////////////////////////////////////////////////////////// SETUP
@@ -36,37 +41,72 @@ namespace PIP_Ethernet_Inspection_Tool
 
         private void BTN_Start_Monitoring_Click(object sender, EventArgs e)
         {
-            if (BW_Monitoring_Engine_Running=="Stopped")
+            if (BTN_TCP_Select.Checked)
             {
-                if (!BW_Monitoring_Engine.IsBusy)
+                if (BW_Monitoring_Engine_Running == "Stopped")
                 {
-                    BW_Monitoring_Engine.RunWorkerAsync();
-                    BW_Monitoring_Engine_Running = "Started";
-                    IND_Monitoring_Engine.BackColor = Color.Green;
-                    DGV_Incoming_Messages.Rows.Insert(0, Incoming_Message_Index, System.DateTime.Now.ToString(), "Monitoring Started");
-                    Incoming_Message_Index++;
+                
+                    if (!BW_TCP_Monitoring_Engine.IsBusy)
+                    {
+                        BW_TCP_Monitoring_Engine.RunWorkerAsync();
+                        BW_Monitoring_Engine_Running = "Started";
+                        IND_Monitoring_Engine.BackColor = Color.Green;
+                        DGV_Incoming_Messages.Rows.Insert(0, Incoming_Message_Index, System.DateTime.Now.ToString(), "Monitoring Started");
+                        Incoming_Message_Index++;
+                    }
+                    else
+                    {
+                        BW_Monitoring_Engine_Running = "Hung";
+                        IND_Monitoring_Engine.BackColor = Color.Orange;
+                        DGV_Incoming_Messages.Rows.Insert(0, Incoming_Message_Index, System.DateTime.Now.ToString(), "Monitoring Hung");
+                        Incoming_Message_Index++;
+                    }
                 }
                 else
                 {
-                    BW_Monitoring_Engine_Running = "Hung";
-                    IND_Monitoring_Engine.BackColor = Color.Orange;
-                    DGV_Incoming_Messages.Rows.Insert(0, Incoming_Message_Index, System.DateTime.Now.ToString(), "Monitoring Hung");
+                    BW_TCP_Monitoring_Engine.CancelAsync();
+                    BW_Monitoring_Engine_Running = "Stopped";
+                    IND_Monitoring_Engine.BackColor = Color.Red;
+                    DGV_Incoming_Messages.Rows.Insert(0, Incoming_Message_Index, System.DateTime.Now.ToString(), "Monitoring Stopped");
                     Incoming_Message_Index++;
-                }                
+                }
             }
-            else
-            {                
-                BW_Monitoring_Engine.CancelAsync();
-                BW_Monitoring_Engine_Running = "Stopped";
-                IND_Monitoring_Engine.BackColor = Color.Red;
-                DGV_Incoming_Messages.Rows.Insert(0, Incoming_Message_Index, System.DateTime.Now.ToString(), "Monitoring Stopped");
-                Incoming_Message_Index++;
+
+            
+                if (BTN_UDP_Select.Checked)
+                {
+                if (BW_Monitoring_Engine_Running == "Stopped")
+                {
+                    if (!BW_UDP_Monitoring_Engine.IsBusy)
+                    {
+                        BW_UDP_Monitoring_Engine.RunWorkerAsync();
+                        BW_Monitoring_Engine_Running = "Started";
+                        IND_Monitoring_Engine.BackColor = Color.Green;
+                        DGV_Incoming_Messages.Rows.Insert(0, Incoming_Message_Index, System.DateTime.Now.ToString(), "Monitoring Started");
+                        Incoming_Message_Index++;
+                    }
+                    else
+                    {
+                        BW_Monitoring_Engine_Running = "Hung";
+                        IND_Monitoring_Engine.BackColor = Color.Orange;
+                        DGV_Incoming_Messages.Rows.Insert(0, Incoming_Message_Index, System.DateTime.Now.ToString(), "Monitoring Hung");
+                        Incoming_Message_Index++;
+                    }
+                }
+                else
+                {
+                    BW_UDP_Monitoring_Engine.CancelAsync();
+                    BW_Monitoring_Engine_Running = "Stopped";
+                    IND_Monitoring_Engine.BackColor = Color.Red;
+                    DGV_Incoming_Messages.Rows.Insert(0, Incoming_Message_Index, System.DateTime.Now.ToString(), "Monitoring Stopped");
+                    Incoming_Message_Index++;                    
+                }
             }
         }
 
         // ////////////////////////////////////////////////////////////////// BACKGROUND WORKERS
 
-        private void BW_Monitoring_Engine_DoWork(object sender, DoWorkEventArgs e)
+        private void BW_TCP_Monitoring_Engine_DoWork(object sender, DoWorkEventArgs e)
         {
             TcpListener server = null;
             try
@@ -88,7 +128,7 @@ namespace PIP_Ethernet_Inspection_Tool
                     int i;
                     while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
                     {
-                        if (!BW_Monitoring_Engine.CancellationPending)
+                        if (!BW_TCP_Monitoring_Engine.CancellationPending)
                         {
                             data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
                             Console.WriteLine("Received: {0}", data);
@@ -118,10 +158,65 @@ namespace PIP_Ethernet_Inspection_Tool
             }                    
         }
 
-        private void BW_Monitoring_Engine_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void BW_TCP_Monitoring_Engine_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             
         }
+
+
+        private void BW_UDP_Monitoring_Engine_DoWork(object sender, DoWorkEventArgs e)
+        {
+
+
+            bool done = false;
+
+            Int32 Port_Address = Convert.ToInt32(NV_Port_Address.Value);
+            UdpClient listener = new UdpClient(Port_Address);
+
+            string IP_Address = NV_IP_Byte_1.Value.ToString() + "." + NV_IP_Byte_2.Value.ToString() + "." + NV_IP_Byte_3.Value.ToString() + "." + NV_IP_Byte_4.Value.ToString();
+            IPAddress localAddr = IPAddress.Parse(IP_Address);
+            IPEndPoint groupEP = new IPEndPoint(localAddr, Port_Address);
+
+            try
+            {
+                Byte[] bytes = new Byte[256];
+                String data = null;
+                while (!done && !BW_UDP_Monitoring_Engine.CancellationPending)
+                {
+                    Console.WriteLine("Waiting for broadcast");
+                    bytes = listener.Receive(ref groupEP);
+                    data = System.Text.Encoding.ASCII.GetString(bytes);
+
+                    Incoming_Message = data.ToString();
+
+                    Console.WriteLine("Received broadcast from {0} :\n {1}\n",
+                        groupEP.ToString(),
+                        Encoding.ASCII.GetString(bytes, 0, bytes.Length));
+                }
+
+                if (BW_UDP_Monitoring_Engine.CancellationPending)
+                {
+                    done = true;
+                }
+
+            }
+            
+            finally
+            {
+                listener.Close();
+            }
+        }
+
+
+        private void BW_UDP_Monitoring_Engine_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+
+        }
+
+
+
+
+
 
         // ////////////////////////////////////////////////////////////////// TIMERS
 
@@ -161,6 +256,8 @@ namespace PIP_Ethernet_Inspection_Tool
                 Incoming_Message = Incoming_Message_Memory;
                 Incoming_Message_Index++;
             }
-        }        
+        }
+
+        
     }    
 }

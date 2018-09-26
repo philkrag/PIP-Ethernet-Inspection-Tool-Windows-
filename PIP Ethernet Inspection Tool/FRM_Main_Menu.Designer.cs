@@ -41,9 +41,10 @@
             // 
             // BTN_Send
             // 
-            this.BTN_Send.Location = new System.Drawing.Point(86, 27);
+            this.BTN_Send.Location = new System.Drawing.Point(129, 42);
+            this.BTN_Send.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BTN_Send.Name = "BTN_Send";
-            this.BTN_Send.Size = new System.Drawing.Size(80, 80);
+            this.BTN_Send.Size = new System.Drawing.Size(120, 123);
             this.BTN_Send.TabIndex = 0;
             this.BTN_Send.Text = "Send";
             this.BTN_Send.UseVisualStyleBackColor = true;
@@ -51,9 +52,10 @@
             // 
             // BTN_Receive
             // 
-            this.BTN_Receive.Location = new System.Drawing.Point(86, 113);
+            this.BTN_Receive.Location = new System.Drawing.Point(129, 174);
+            this.BTN_Receive.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BTN_Receive.Name = "BTN_Receive";
-            this.BTN_Receive.Size = new System.Drawing.Size(80, 80);
+            this.BTN_Receive.Size = new System.Drawing.Size(120, 123);
             this.BTN_Receive.TabIndex = 1;
             this.BTN_Receive.Text = "Receive";
             this.BTN_Receive.UseVisualStyleBackColor = true;
@@ -61,11 +63,13 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(172, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
+            this.menuStrip1.Size = new System.Drawing.Size(258, 35);
             this.menuStrip1.TabIndex = 9;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -74,32 +78,32 @@
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(61, 29);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(146, 30);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // PB_Banner
             // 
-            this.PB_Banner.BackColor = System.Drawing.Color.White;
+            this.PB_Banner.BackColor = System.Drawing.Color.DimGray;
             this.PB_Banner.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PB_Banner.Image = global::PIP_Ethernet_Inspection_Tool.Properties.Resources.Software_Banner;
-            this.PB_Banner.Location = new System.Drawing.Point(0, 27);
+            this.PB_Banner.Location = new System.Drawing.Point(0, 42);
+            this.PB_Banner.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.PB_Banner.Name = "PB_Banner";
-            this.PB_Banner.Size = new System.Drawing.Size(80, 171);
+            this.PB_Banner.Size = new System.Drawing.Size(119, 262);
             this.PB_Banner.TabIndex = 8;
             this.PB_Banner.TabStop = false;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(172, 198);
+            this.ClientSize = new System.Drawing.Size(258, 305);
             this.Controls.Add(this.BTN_Receive);
             this.Controls.Add(this.BTN_Send);
             this.Controls.Add(this.PB_Banner);
@@ -107,6 +111,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);

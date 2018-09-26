@@ -49,11 +49,14 @@
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Date_Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Message = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BW_Monitoring_Engine = new System.ComponentModel.BackgroundWorker();
+            this.BW_TCP_Monitoring_Engine = new System.ComponentModel.BackgroundWorker();
             this.TMR_Display_Engine = new System.Windows.Forms.Timer(this.components);
             this.TMR_Monitoring_Engine = new System.Windows.Forms.Timer(this.components);
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.PB_Banner = new System.Windows.Forms.PictureBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.BTN_TCP_Select = new System.Windows.Forms.RadioButton();
+            this.BTN_UDP_Select = new System.Windows.Forms.RadioButton();
+            this.BW_UDP_Monitoring_Engine = new System.ComponentModel.BackgroundWorker();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.IND_Display_Engine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.IND_Monitoring_Engine)).BeginInit();
@@ -66,6 +69,7 @@
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Incoming_Messages)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Banner)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // BTN_Start_Monitoring
@@ -85,7 +89,7 @@
             this.groupBox1.Controls.Add(this.IND_Monitoring_Engine);
             this.groupBox1.Controls.Add(this.LBL_Monitoring_Engine_Status);
             this.groupBox1.Controls.Add(this.BTN_Start_Monitoring);
-            this.groupBox1.Location = new System.Drawing.Point(92, 98);
+            this.groupBox1.Location = new System.Drawing.Point(92, 152);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(510, 82);
             this.groupBox1.TabIndex = 2;
@@ -240,7 +244,7 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.DGV_Incoming_Messages);
-            this.groupBox4.Location = new System.Drawing.Point(92, 186);
+            this.groupBox4.Location = new System.Drawing.Point(92, 240);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(510, 228);
             this.groupBox4.TabIndex = 5;
@@ -277,12 +281,12 @@
             this.Message.Name = "Message";
             this.Message.Width = 255;
             // 
-            // BW_Monitoring_Engine
+            // BW_TCP_Monitoring_Engine
             // 
-            this.BW_Monitoring_Engine.WorkerReportsProgress = true;
-            this.BW_Monitoring_Engine.WorkerSupportsCancellation = true;
-            this.BW_Monitoring_Engine.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BW_Monitoring_Engine_DoWork);
-            this.BW_Monitoring_Engine.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BW_Monitoring_Engine_RunWorkerCompleted);
+            this.BW_TCP_Monitoring_Engine.WorkerReportsProgress = true;
+            this.BW_TCP_Monitoring_Engine.WorkerSupportsCancellation = true;
+            this.BW_TCP_Monitoring_Engine.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BW_TCP_Monitoring_Engine_DoWork);
+            this.BW_TCP_Monitoring_Engine.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BW_TCP_Monitoring_Engine_RunWorkerCompleted);
             // 
             // TMR_Display_Engine
             // 
@@ -295,43 +299,80 @@
             this.TMR_Monitoring_Engine.Interval = 10;
             this.TMR_Monitoring_Engine.Tick += new System.EventHandler(this.TMR_Monitoring_Engine_Tick);
             // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(614, 24);
-            this.menuStrip1.TabIndex = 7;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
             // PB_Banner
             // 
-            this.PB_Banner.BackColor = System.Drawing.Color.White;
+            this.PB_Banner.BackColor = System.Drawing.Color.DimGray;
             this.PB_Banner.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PB_Banner.Image = global::PIP_Ethernet_Inspection_Tool.Properties.Resources.Software_Banner;
             this.PB_Banner.Location = new System.Drawing.Point(0, 0);
             this.PB_Banner.Name = "PB_Banner";
-            this.PB_Banner.Size = new System.Drawing.Size(80, 419);
+            this.PB_Banner.Size = new System.Drawing.Size(80, 469);
             this.PB_Banner.TabIndex = 6;
             this.PB_Banner.TabStop = false;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.BTN_TCP_Select);
+            this.groupBox3.Controls.Add(this.BTN_UDP_Select);
+            this.groupBox3.Location = new System.Drawing.Point(92, 97);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox3.Size = new System.Drawing.Size(510, 50);
+            this.groupBox3.TabIndex = 8;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Transmission Method";
+            // 
+            // BTN_TCP_Select
+            // 
+            this.BTN_TCP_Select.Appearance = System.Windows.Forms.Appearance.Button;
+            this.BTN_TCP_Select.Checked = true;
+            this.BTN_TCP_Select.Location = new System.Drawing.Point(384, 16);
+            this.BTN_TCP_Select.Margin = new System.Windows.Forms.Padding(2);
+            this.BTN_TCP_Select.Name = "BTN_TCP_Select";
+            this.BTN_TCP_Select.Size = new System.Drawing.Size(57, 23);
+            this.BTN_TCP_Select.TabIndex = 1;
+            this.BTN_TCP_Select.TabStop = true;
+            this.BTN_TCP_Select.Text = "TCP";
+            this.BTN_TCP_Select.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.BTN_TCP_Select.UseVisualStyleBackColor = true;
+            // 
+            // BTN_UDP_Select
+            // 
+            this.BTN_UDP_Select.Appearance = System.Windows.Forms.Appearance.Button;
+            this.BTN_UDP_Select.Location = new System.Drawing.Point(447, 16);
+            this.BTN_UDP_Select.Margin = new System.Windows.Forms.Padding(2);
+            this.BTN_UDP_Select.Name = "BTN_UDP_Select";
+            this.BTN_UDP_Select.Size = new System.Drawing.Size(57, 23);
+            this.BTN_UDP_Select.TabIndex = 0;
+            this.BTN_UDP_Select.Text = "UDP";
+            this.BTN_UDP_Select.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.BTN_UDP_Select.UseVisualStyleBackColor = true;
+            // 
+            // BW_UDP_Monitoring_Engine
+            // 
+            this.BW_UDP_Monitoring_Engine.WorkerSupportsCancellation = true;
+            this.BW_UDP_Monitoring_Engine.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BW_UDP_Monitoring_Engine_DoWork);
+            this.BW_UDP_Monitoring_Engine.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BW_UDP_Monitoring_Engine_RunWorkerCompleted);
             // 
             // FRM_Receive
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(614, 419);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.ClientSize = new System.Drawing.Size(614, 475);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.PB_Banner);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "FRM_Receive";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Receive Ethernet Data";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FRM_Receive_FormClosing);
+            this.Load += new System.EventHandler(this.FRM_Receive_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.IND_Display_Engine)).EndInit();
@@ -346,8 +387,8 @@
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Incoming_Messages)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Banner)).EndInit();
+            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -366,7 +407,7 @@
         private System.Windows.Forms.NumericUpDown NV_IP_Byte_3;
         private System.Windows.Forms.NumericUpDown NV_IP_Byte_4;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.ComponentModel.BackgroundWorker BW_Monitoring_Engine;
+        private System.ComponentModel.BackgroundWorker BW_TCP_Monitoring_Engine;
         private System.Windows.Forms.PictureBox IND_Display_Engine;
         private System.Windows.Forms.Label LBL_Display_Engine_Status;
         private System.Windows.Forms.Timer TMR_Display_Engine;
@@ -376,6 +417,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Date_Time;
         private System.Windows.Forms.DataGridViewTextBoxColumn Message;
         private System.Windows.Forms.PictureBox PB_Banner;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton BTN_TCP_Select;
+        private System.Windows.Forms.RadioButton BTN_UDP_Select;
+        private System.ComponentModel.BackgroundWorker BW_UDP_Monitoring_Engine;
     }
 }
