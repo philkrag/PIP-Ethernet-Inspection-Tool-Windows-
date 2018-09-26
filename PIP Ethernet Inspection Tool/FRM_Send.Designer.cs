@@ -43,6 +43,9 @@
             this.NV_IP_Byte_4 = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.PB_Banner = new System.Windows.Forms.PictureBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.BTN_TCP_Select = new System.Windows.Forms.RadioButton();
+            this.BTN_UDP_Select = new System.Windows.Forms.RadioButton();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NV_Port_Address)).BeginInit();
@@ -51,6 +54,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.NV_IP_Byte_3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NV_IP_Byte_4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Banner)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox2
@@ -58,7 +62,7 @@
             this.groupBox2.Controls.Add(this.BTN_Send);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.TXB_Message);
-            this.groupBox2.Location = new System.Drawing.Point(92, 98);
+            this.groupBox2.Location = new System.Drawing.Point(92, 152);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(510, 78);
             this.groupBox2.TabIndex = 1;
@@ -200,26 +204,67 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(6, 26);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(95, 13);
+            this.label1.Size = new System.Drawing.Size(114, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Current IP Address";
+            this.label1.Text = "Destination IP Address";
             // 
             // PB_Banner
             // 
-            this.PB_Banner.BackColor = System.Drawing.Color.White;
+            this.PB_Banner.BackColor = System.Drawing.Color.DimGray;
             this.PB_Banner.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PB_Banner.Image = global::PIP_Ethernet_Inspection_Tool.Properties.Resources.Software_Banner;
             this.PB_Banner.Location = new System.Drawing.Point(0, 0);
             this.PB_Banner.Name = "PB_Banner";
-            this.PB_Banner.Size = new System.Drawing.Size(80, 190);
+            this.PB_Banner.Size = new System.Drawing.Size(80, 242);
             this.PB_Banner.TabIndex = 7;
             this.PB_Banner.TabStop = false;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.BTN_TCP_Select);
+            this.groupBox3.Controls.Add(this.BTN_UDP_Select);
+            this.groupBox3.Location = new System.Drawing.Point(92, 97);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox3.Size = new System.Drawing.Size(510, 50);
+            this.groupBox3.TabIndex = 9;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Transmission Method";
+            // 
+            // BTN_TCP_Select
+            // 
+            this.BTN_TCP_Select.Appearance = System.Windows.Forms.Appearance.Button;
+            this.BTN_TCP_Select.Checked = true;
+            this.BTN_TCP_Select.Location = new System.Drawing.Point(384, 16);
+            this.BTN_TCP_Select.Margin = new System.Windows.Forms.Padding(2);
+            this.BTN_TCP_Select.Name = "BTN_TCP_Select";
+            this.BTN_TCP_Select.Size = new System.Drawing.Size(57, 23);
+            this.BTN_TCP_Select.TabIndex = 1;
+            this.BTN_TCP_Select.TabStop = true;
+            this.BTN_TCP_Select.Text = "TCP";
+            this.BTN_TCP_Select.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.BTN_TCP_Select.UseVisualStyleBackColor = true;
+            this.BTN_TCP_Select.CheckedChanged += new System.EventHandler(this.BTN_TCP_Select_CheckedChanged);
+            // 
+            // BTN_UDP_Select
+            // 
+            this.BTN_UDP_Select.Appearance = System.Windows.Forms.Appearance.Button;
+            this.BTN_UDP_Select.Location = new System.Drawing.Point(447, 16);
+            this.BTN_UDP_Select.Margin = new System.Windows.Forms.Padding(2);
+            this.BTN_UDP_Select.Name = "BTN_UDP_Select";
+            this.BTN_UDP_Select.Size = new System.Drawing.Size(57, 23);
+            this.BTN_UDP_Select.TabIndex = 0;
+            this.BTN_UDP_Select.Text = "UDP";
+            this.BTN_UDP_Select.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.BTN_UDP_Select.UseVisualStyleBackColor = true;
+            this.BTN_UDP_Select.CheckedChanged += new System.EventHandler(this.BTN_UDP_Select_CheckedChanged);
             // 
             // FRM_Send
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(614, 190);
+            this.ClientSize = new System.Drawing.Size(614, 241);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.PB_Banner);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
@@ -240,6 +285,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.NV_IP_Byte_3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NV_IP_Byte_4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Banner)).EndInit();
+            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -259,5 +305,8 @@
         private System.Windows.Forms.NumericUpDown NV_IP_Byte_4;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox PB_Banner;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton BTN_TCP_Select;
+        private System.Windows.Forms.RadioButton BTN_UDP_Select;
     }
 }
